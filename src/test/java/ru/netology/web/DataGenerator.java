@@ -12,8 +12,8 @@ import static io.restassured.RestAssured.given;
 
 public class DataGenerator {
 
-    private static Faker faker = new Faker(new Locale("en"));
-    private static RequestSpecification requestSpec = new RequestSpecBuilder()
+    private static final Faker faker = new Faker(new Locale("en"));
+    private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
             .setPort(9999)
             .setAccept(ContentType.JSON)
@@ -39,12 +39,6 @@ public class DataGenerator {
         private Registration() {
         }
 
-        public static User generateValidUser() {
-            User user = new User(generateLogin(), generatePassword(), "active");
-            setUpAll(user);
-            return user;
-        }
-
         public static String generateLogin() {
             return faker.name().username();
         }
@@ -53,6 +47,17 @@ public class DataGenerator {
             return faker.internet().password();
         }
 
-    }
+        public static User generateValidUser() {
+            User user = new User(generateLogin(), generatePassword(), "active");
+            setUpAll(user);
+            return user;
+        }
 
+        public static User generateBlockedUser() {
+            User user = new User(generateLogin(), generatePassword(), "blocked");
+            setUpAll(user);
+            return user;
+        }
+    }
 }
+
