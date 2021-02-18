@@ -2,7 +2,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.DataGenerator;
 import ru.netology.web.User;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -32,8 +31,6 @@ public class AuthTest {
         $("button[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").shouldBe(visible).shouldHave(text("Ошибка"));
     }
-
-
 }
 
 
