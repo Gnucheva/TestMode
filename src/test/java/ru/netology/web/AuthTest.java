@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static ru.netology.web.DataGenerator.Registration.generateBlockedUser;
+import static ru.netology.web.DataGenerator.Registration.*;
 
 public class AuthTest {
     @BeforeEach
@@ -30,7 +31,25 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(blockedUserInfo.getLogin());
         $("[data-test-id=password] input").setValue(blockedUserInfo.getPassword());
         $("button[data-test-id=action-login]").click();
-        $("[data-test-id=error-notification]").shouldBe(visible).shouldHave(text("Ошибка"));
+        $(withText("Пользователь заблокирован")).shouldBe(visible);
+    }
+
+    @Test
+    void shouldGetErrorIfWrongPassword() {
+        UserInfo wrongPasswordUser = generateWrongPasswordUser("active");
+        $("[data-test-id=login] input").setValue(wrongPasswordUser.getLogin());
+        $("[data-test-id=password] input").setValue(wrongPasswordUser.getPassword());
+        $("button[data-test-id=action-login]").click();
+        $(withText("Неверно указан логин или пароль"));
+    }
+
+    @Test
+    void shouldGetErrorIfWrongLogin() {
+        UserInfo wrongLoginUser = generateWrongLoginUser("active");
+        $("[data-test-id=login] input").setValue(wrongLoginUser.getLogin());
+        $("[data-test-id=password] input").setValue(wrongLoginUser.getPassword());
+        $("button[data-test-id=action-login]").click();
+        $(withText("Неверно указан логин или пароль"));
     }
 }
 

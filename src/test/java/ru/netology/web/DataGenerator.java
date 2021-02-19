@@ -58,6 +58,18 @@ public class DataGenerator {
             sendQuery(userInfo);
             return userInfo;
         }
+
+        public static UserInfo generateWrongPasswordUser(String status) {
+            String login = generateLogin();
+            sendQuery(new UserInfo(login, generatePassword(), status));
+            return new UserInfo(login, generatePassword(), status);
+        }
+
+        public static UserInfo generateWrongLoginUser(String status) {
+            String password = generatePassword();
+            sendQuery(new UserInfo(generateLogin(), password, status));
+            return new UserInfo(generateLogin(), password, status);
+        }
     }
 }
 
