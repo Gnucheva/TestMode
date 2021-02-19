@@ -40,7 +40,8 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(wrongPasswordUser.getLogin());
         $("[data-test-id=password] input").setValue(wrongPasswordUser.getPassword());
         $("button[data-test-id=action-login]").click();
-        $(withText("Неверно указан логин или пароль"));
+        $("[data-test-id=error-notification] .notification__content")
+                .shouldHave(text("Неверно указан логин или пароль"));
     }
 
     @Test
@@ -49,7 +50,8 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(wrongLoginUser.getLogin());
         $("[data-test-id=password] input").setValue(wrongLoginUser.getPassword());
         $("button[data-test-id=action-login]").click();
-        $(withText("Неверно указан логин или пароль"));
+        $("[data-test-id=error-notification] .notification__content")
+                .shouldHave(text("Неверно указан логин или пароль"));
     }
 }
 
